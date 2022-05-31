@@ -5,8 +5,9 @@
 const fs = require("fs");
 const View = require("./notesView");
 const Model = require("./notesModel");
+// const Api = require("./notesAPI");
 
-describe("A test for my web page", () => {
+describe("Notes View", () => {
   beforeEach(() => {
     document.body.innerHTML = fs.readFileSync("./index.html");
 
@@ -45,5 +46,22 @@ describe("A test for my web page", () => {
     view.displayNotes();
 
     expect(document.querySelectorAll("div.note").length).toEqual(2);
+  });
+
+  it("should call notes from server and display them on the page", () => {
+    const mockApi = {
+      loadNotes: (callback) => {
+        callback(["This note is coming from the server"]);
+      },
+    };
+
+    const view = new View(model, mockApi);
+
+    view.displayNotesFromApi();
+
+    expect(document.querySelectorAll("div.note").length).toBe(1);
+    expect(document.querySelectorAll("div.note")[0].innerText).toBe(
+      "This note is coming from the server"
+    );
   });
 });
