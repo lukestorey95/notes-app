@@ -1,4 +1,4 @@
-console.log("The notes app is running");
+// console.log("The notes app is running");
 
 const NotesApi = require("./notesApi");
 const NotesModel = require("./notesModel");

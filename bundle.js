@@ -74,8 +74,10 @@
           });
         }
         addNewNote(note) {
-          this.model.addNote(note);
-          this.displayNotes();
+          this.api.createNote(note, (response) => {
+            this.model.setNotes(response);
+            this.displayNotes();
+          });
           this.inputEl.value = null;
         }
         displayNotes() {
@@ -103,7 +105,6 @@
   });
 
   // index.js
-  console.log("The notes app is running");
   var NotesApi = require_notesApi();
   var NotesModel = require_notesModel();
   var NotesView = require_notesView();

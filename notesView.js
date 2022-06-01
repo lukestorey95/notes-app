@@ -21,8 +21,10 @@ class NotesView {
   }
 
   addNewNote(note) {
-    this.model.addNote(note);
-    this.displayNotes();
+    this.api.createNote(note, (response) => {
+      this.model.setNotes(response);
+      this.displayNotes();
+    });
     this.inputEl.value = null;
   }
 
@@ -46,7 +48,6 @@ class NotesView {
     const newDiv = document.createElement("div");
     newDiv.innerText = note;
     newDiv.classList.add("note");
-
     this.mainContainer.append(newDiv);
   }
 }

@@ -4,7 +4,7 @@ require("jest-fetch-mock").enableFetchMocks();
 
 describe("Api", () => {
   describe("loadNotes", () => {
-    it("calls fetch and loads data", (done) => {
+    it("fetches notes from the server", (done) => {
       const api = new NotesApi();
 
       fetch.mockResponseOnce(
