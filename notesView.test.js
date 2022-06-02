@@ -13,23 +13,15 @@ describe("Notes View", () => {
 
     model = new Model();
     mockApi = {
-      createNote: () => ["New note"],
+      createNote: (callback) => {
+        return callback(["New note"]);
+      },
 
       loadNotes: (callback) => {
         callback(["This note is coming from the server"]);
       },
     };
     view = new View(model, mockApi);
-  });
-
-  it("displays notes on the page", () => {
-    view.model.addNote("This is a test");
-
-    view.displayNotes();
-
-    expect(document.querySelectorAll("div.note")[0].innerText).toBe(
-      "This is a test"
-    );
   });
 
   xit("user can input note, it is posted to server and then displayed", async () => {
@@ -42,6 +34,16 @@ describe("Notes View", () => {
     expect(document.querySelectorAll("div.note").length).toEqual(1);
     expect(document.querySelectorAll("div.note")[0].innerText).toEqual(
       "New note"
+    );
+  });
+
+  it("displays notes on the page", () => {
+    view.model.addNote("This is a test");
+
+    view.displayNotes();
+
+    expect(document.querySelectorAll("div.note")[0].innerText).toBe(
+      "This is a test"
     );
   });
 

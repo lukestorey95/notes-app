@@ -18,15 +18,19 @@
           }
         }
         async createNote(note, callback) {
-          const response = await fetch("http://localhost:3000/notes", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ content: note })
-          });
-          const notes = await response.json();
-          return callback(notes);
+          try {
+            const response = await fetch("http://localhost:3000/notes", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ content: note })
+            });
+            const notes = await response.json();
+            return callback(notes);
+          } catch (error) {
+            console.log(error);
+          }
         }
       };
       module.exports = NotesApi2;
