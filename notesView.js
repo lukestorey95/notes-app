@@ -13,18 +13,31 @@ class NotesView {
     });
   }
 
-  displayNotesFromApi() {
-    this.api.loadNotes((notes) => {
-      this.model.setNotes(notes);
-      this.displayNotes();
-    });
+  // displayNotesFromApi() {
+  //   this.api.loadNotes((notes) => {
+  //     this.model.setNotes(notes);
+  //     this.displayNotes();
+  //   });
+  // }
+
+  async displayNotesFromApi() {
+    const notes = await this.api.loadNotes();
+    this.model.setNotes(notes);
+    this.displayNotes();
   }
 
-  addNewNote(note) {
-    this.api.createNote(note, (response) => {
-      this.model.setNotes(response);
-      this.displayNotes();
-    });
+  // addNewNote(note) {
+  //   this.api.createNote(note, (response) => {
+  //     this.model.setNotes(response);
+  //     this.displayNotes();
+  //   });
+  //   this.inputEl.value = null;
+  // }
+
+  async addNewNote(note) {
+    const notes = await this.api.createNote(note);
+    this.model.setNotes(notes);
+    this.displayNotes();
     this.inputEl.value = null;
   }
 

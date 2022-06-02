@@ -5,7 +5,6 @@
 const fs = require("fs");
 const View = require("./notesView");
 const Model = require("./notesModel");
-// const Api = require("./notesAPI");
 
 describe("Notes View", () => {
   beforeEach(() => {

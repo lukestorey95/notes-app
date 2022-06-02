@@ -8,16 +8,16 @@
   var require_notesApi = __commonJS({
     "notesApi.js"(exports, module) {
       var NotesApi2 = class {
-        async loadNotes(callback) {
+        async loadNotes() {
           try {
             const response = await fetch("http://localhost:3000/notes");
             const notes = await response.json();
-            return callback(notes);
+            return notes;
           } catch (error) {
             console.log(error);
           }
         }
-        async createNote(note, callback) {
+        async createNote(note) {
           try {
             const response = await fetch("http://localhost:3000/notes", {
               method: "POST",
@@ -27,7 +27,7 @@
               body: JSON.stringify({ content: note })
             });
             const notes = await response.json();
-            return callback(notes);
+            return notes;
           } catch (error) {
             console.log(error);
           }
@@ -75,17 +75,15 @@
             this.addNewNote(this.inputEl.value);
           });
         }
-        displayNotesFromApi() {
-          this.api.loadNotes((notes) => {
-            this.model.setNotes(notes);
-            this.displayNotes();
-          });
+        async displayNotesFromApi() {
+          const notes = await this.api.loadNotes();
+          this.model.setNotes(notes);
+          this.displayNotes();
         }
-        addNewNote(note) {
-          this.api.createNote(note, (response) => {
-            this.model.setNotes(response);
-            this.displayNotes();
-          });
+        async addNewNote(note) {
+          const notes = await this.api.createNote(note);
+          this.model.setNotes(notes);
+          this.displayNotes();
           this.inputEl.value = null;
         }
         displayNotes() {

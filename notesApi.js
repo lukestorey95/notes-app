@@ -1,9 +1,9 @@
 class NotesApi {
-  async loadNotes(callback) {
+  async loadNotes() {
     try {
       const response = await fetch("http://localhost:3000/notes");
       const notes = await response.json();
-      return callback(notes);
+      return notes;
     } catch (error) {
       console.log(error);
     }
@@ -17,7 +17,7 @@ class NotesApi {
   //     });
   // }
 
-  async createNote(note, callback) {
+  async createNote(note) {
     try {
       const response = await fetch("http://localhost:3000/notes", {
         method: "POST",
@@ -27,7 +27,7 @@ class NotesApi {
         body: JSON.stringify({ content: note }),
       });
       const notes = await response.json();
-      return callback(notes);
+      return notes;
     } catch (error) {
       console.log(error);
     }
