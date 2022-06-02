@@ -25,7 +25,7 @@ describe("Api", () => {
     it("creates a new note on the server", (done) => {
       const api = new NotesApi();
 
-      fetch.mockResponse(async (request) => {
+      fetch.mockResponseOnce(async (request) => {
         try {
           expect(request.method).toBe("POST");
           const requestBody = await request.json();

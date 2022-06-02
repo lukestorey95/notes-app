@@ -8,21 +8,25 @@
   var require_notesApi = __commonJS({
     "notesApi.js"(exports, module) {
       var NotesApi2 = class {
-        loadNotes(callback) {
-          fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => {
-            callback(data);
-          });
+        async loadNotes(callback) {
+          try {
+            const response = await fetch("http://localhost:3000/notes");
+            const notes = await response.json();
+            return callback(notes);
+          } catch (error) {
+            console.log(error);
+          }
         }
-        createNote(note, callback) {
-          fetch("http://localhost:3000/notes", {
+        async createNote(note, callback) {
+          const response = await fetch("http://localhost:3000/notes", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
             },
             body: JSON.stringify({ content: note })
-          }).then((response) => response.json()).then((data) => {
-            callback(data);
           });
+          const notes = await response.json();
+          return callback(notes);
         }
       };
       module.exports = NotesApi2;
