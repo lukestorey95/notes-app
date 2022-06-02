@@ -13,8 +13,8 @@ describe("Notes View", () => {
 
     model = new Model();
     mockApi = {
-      createNote: (callback) => {
-        return callback(["New note"]);
+      createNote: (note, callback) => {
+        callback(["New note"]);
       },
 
       loadNotes: (callback) => {
@@ -24,7 +24,7 @@ describe("Notes View", () => {
     view = new View(model, mockApi);
   });
 
-  xit("user can input note, it is posted to server and then displayed", async () => {
+  it("user can input note, it is posted to server and then displayed", async () => {
     const input = document.querySelector("#note-input");
     input.value = "New note";
 
