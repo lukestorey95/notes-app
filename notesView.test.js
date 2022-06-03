@@ -12,12 +12,12 @@ describe("Notes View", () => {
 
     model = new Model();
     mockApi = {
-      createNote: (note, callback) => {
-        callback(["New note"]);
+      createNote: (note) => {
+        return [note];
       },
 
-      loadNotes: (callback) => {
-        callback(["This note is coming from the server"]);
+      loadNotes: () => {
+        return ["This note is coming from the server"];
       },
     };
     view = new View(model, mockApi);
@@ -30,38 +30,32 @@ describe("Notes View", () => {
     const button = document.querySelector("#add-note-button");
     button.click();
 
-    expect(document.querySelectorAll("div.note").length).toEqual(1);
-    expect(document.querySelectorAll("div.note")[0].innerText).toEqual(
-      "New note"
-    );
+    setTimeout(() => {
+      expect(document.querySelectorAll("div.note").length).toEqual(1);
+      expect(document.querySelectorAll("div.note")[0].innerText).toEqual(
+        "New note"
+      );
+    }, 0);
   });
 
-  it("displays notes on the page", () => {
-    view.model.addNote("This is a test");
+  it("clears the previous notes when adding a new note", async () => {
+    view.model.addNote("one");
+    view.model.addNote("two");
 
-    view.displayNotes();
-
-    expect(document.querySelectorAll("div.note")[0].innerText).toBe(
-      "This is a test"
-    );
-  });
-
-  it("clears the previous notes when adding a new note", () => {
-    model.addNote("one");
-    model.addNote("two");
-
-    view.displayNotes();
-    view.displayNotes();
+    await view.displayNotes();
+    await view.displayNotes();
 
     expect(document.querySelectorAll("div.note").length).toEqual(2);
   });
 
-  it("should call notes from server and display them on the page", () => {
-    view.displayNotesFromApi();
+  it("should call notes from server and display them on the page", async () => {
+    await view.displayNotesFromApi();
 
-    expect(document.querySelectorAll("div.note").length).toBe(1);
-    expect(document.querySelectorAll("div.note")[0].innerText).toBe(
-      "This note is coming from the server"
-    );
+    setTimeout(() => {
+      expect(document.querySelectorAll("div.note").length).toBe(1);
+      expect(document.querySelectorAll("div.note")[0].innerText).toBe(
+        "This note is coming from the server"
+      );
+    }, 0);
   });
 });

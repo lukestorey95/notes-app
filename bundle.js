@@ -45,7 +45,8 @@
           this.notes = [];
         }
         setNotes(notes) {
-          this.notes = notes;
+          this.reset();
+          notes.forEach((note) => this.notes.push(note));
         }
         addNote(note) {
           this.notes.push(note);

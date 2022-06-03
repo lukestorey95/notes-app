@@ -44,7 +44,6 @@ class NotesView {
   displayNotes() {
     this.clearNoteDivs();
     let notes = this.model.getNotes();
-
     notes.forEach((note) => {
       this.addNoteDiv(note);
     });
